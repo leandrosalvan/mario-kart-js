@@ -9,6 +9,8 @@ const players = [
 
 const RODADAS = 5;
 
+const esperar = (ms) => new Promise((r) => setTimeout(r, ms));
+
 const rollDice = () => Math.floor(Math.random() * 6) + 1;
 
 function sortearPlayers() {
@@ -53,18 +55,21 @@ function rodada(p1, p2, bloco) {
   }
 }
 
-function main() {
+async function main() {
   const [p1, p2] = sortearPlayers();
   console.log(`🏁🚨 Corrida entre ${p1.nome} e ${p2.nome} começando...\n`);
 
   for (let i = 1; i <= RODADAS; i++) {
     const bloco = sortearBloco();
     console.log(`🏁 Rodada ${i} - Bloco: ${bloco}`);
+    await esperar(1000);
     rodada(p1, p2, bloco);
     console.log("-----------------------------");
+    await esperar(1500);
   }
 
   console.log("Resultado final:");
+  await esperar(1000);
   console.log(`${p1.nome}: ${p1.pontos} ponto(s)`);
   console.log(`${p2.nome}: ${p2.pontos} ponto(s)`);
   if (p1.pontos === p2.pontos) console.log("A corrida terminou em empate!");
